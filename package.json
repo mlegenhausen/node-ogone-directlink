@@ -1,0 +1,22 @@
+{
+    "author": "Malte Legenhausen <mlegenhausen@gmail.com>",
+    "name": "ogone-directlink",
+    "description": "Thin wrapper around the directlink http api of the ogone payment service",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/mlegenhausen/node-ogone-directlink.git"
+    },
+    "engines": {
+        "node": "~0.6.6"
+    },
+    "dependencies": {
+        "xml2js": "0.x.x",
+        "sugar": "1.x.x",
+        "qs": "0.x.x",
+        "request": "1.x.x"
+    },
+    "devDependencies": {
+        "nodeunit": "0.x.x"
+    }
+}

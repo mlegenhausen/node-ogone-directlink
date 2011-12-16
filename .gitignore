@@ -1,0 +1,8 @@
+/node_modules/**
+.project
+.settings/**
+.monitor
+.dropbox
+*.iml
+.idea
+.DS_Store
