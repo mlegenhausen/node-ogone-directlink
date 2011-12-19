@@ -1,5 +1,6 @@
 
 var Ogone = require('../index');
+var request = require('request');
 
 exports.testHashify = function(test) {
     var key = 'testtesttesttest';
@@ -56,4 +57,38 @@ exports.testNormalize = function(test) {
         });
     });
     test.done();
-}
+};
+
+exports.testOperation = function(test) {
+    var req = new Ogone.Request();
+    req._send = function(callback) {
+
+    };
+    req.operation('Hello', null);
+    test.equal(req.query.operation, 'Hello');
+    test.done();
+};
+
+exports.testPrepare = function(test) {
+    var req = new Ogone.Request();
+    req.required = ['foo'];
+    var result = req._prepare({'foo': 'bar'});
+    test.equal(result.FOO, 'bar');
+    result = req._prepare({'bar': 'foo'});
+    test.ok(result instanceof Error);
+    test.done();
+};
+
+exports.testSend = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return new Error('Error');
+    };
+    req._send(function(err) {
+        test.ok(err instanceof Error);
+        test.equal(err.message, 'Error');
+        request.post = _post;
+        test.done();
+    });
+};

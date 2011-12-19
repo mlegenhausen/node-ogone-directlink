@@ -7,6 +7,9 @@
         "type": "git",
         "url": "git://github.com/mlegenhausen/node-ogone-directlink.git"
     },
+    "scripts": {
+        "test": "nodeunit test/"
+    },
     "engines": {
         "node": "~0.6.6"
     },
