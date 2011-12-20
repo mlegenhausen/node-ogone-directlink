@@ -79,16 +79,124 @@ exports.testPrepare = function(test) {
     test.done();
 };
 
-exports.testSend = function(test) {
-    var _post = request.post;
+exports.testSendPrepareError = function(test) {
     var req = new Ogone.Request();
     req._prepare = function() {
-        return new Error('Error');
+        return new Error('Prepare Error');
     };
     req._send(function(err) {
         test.ok(err instanceof Error);
-        test.equal(err.message, 'Error');
+        test.equal(err.message, 'Prepare Error');
+        test.done();
+    });
+};
+
+exports.testSendPostError = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return {};
+    };
+    request.post = function(message, callback) {
+        return callback(new Error('Post Error'));
+    };
+    req._send(function(err) {
+        test.ok(err instanceof Error);
+        test.equal(err.message, 'Post Error');
         request.post = _post;
         test.done();
     });
+};
+
+exports.testSendParseError = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return {};
+    };
+    request.post = function(message, callback) {
+        return callback(null, 'Test');
+    };
+    req.parser.parseString = function(body, callback) {
+        return callback(new Error("Parse Error"));
+    };
+    req._send(function(err) {
+        test.ok(err instanceof Error);
+        test.equal(err.message, 'Parse Error');
+        request.post = _post;
+        test.done();
+    });
+};
+
+exports.testSendUnknownResult = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return {};
+    };
+    request.post = function(message, callback) {
+        return callback(null, 'Test');
+    };
+    req.parser.parseString = function(body, callback) {
+        return callback(null, "Unknown Response");
+    };
+    req._send(function(err) {
+        test.ok(err instanceof Error);
+        request.post = _post;
+        test.done();
+    });
+};
+
+exports.testSendNcError = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return {};
+    };
+    request.post = function(message, callback) {
+        return callback(null, 'Test');
+    };
+    req.parser.parseString = function(body, callback) {
+        return callback(null, {'@': {
+            ncerror: '5001113'
+        }});
+    };
+    req._send(function(err) {
+        test.ok(err instanceof Ogone.OgoneError);
+        test.equal(err.response.ncerror, '5001113');
+        request.post = _post;
+        test.done();
+    });
+};
+
+exports.testSendSuccess = function(test) {
+    var _post = request.post;
+    var req = new Ogone.Request();
+    req._prepare = function() {
+        return {};
+    };
+    request.post = function(message, callback) {
+        return callback(null, 'Test');
+    };
+    req.parser.parseString = function(body, callback) {
+        return callback(null, {'@': {
+            ncerror: '0'
+        }});
+    };
+    req._send(function(err, result) {
+        test.equal(result.ncerror, '0');
+        request.post = _post;
+        test.done();
+    });
+};
+
+exports.testOgoneMode = function(test) {
+    var testa = new Ogone('foo', 'bar', 'foobar', 'test');
+    test.equal(testa.mode, 'test');
+    var prod = new Ogone('foo', 'bar', 'foobar', 'prod');
+    test.equal(prod.mode, 'prod');
+    test.throws(function() {
+        new Ogone('foo', 'bar', 'foobar', 'error');
+    });
+    test.done();
 };
