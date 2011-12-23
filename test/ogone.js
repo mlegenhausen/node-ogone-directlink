@@ -173,9 +173,10 @@ exports.testSendSuccess = function(test) {
     var _post = request.post;
     var req = new Ogone.Request();
     req._prepare = function() {
-        return {};
+        return {foo: 123};
     };
     request.post = function(message, callback) {
+        test.equal(message.body, 'foo=123');
         return callback(null, 'Test');
     };
     req.parser.parseString = function(body, callback) {
