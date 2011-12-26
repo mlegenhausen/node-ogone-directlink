@@ -201,3 +201,20 @@ exports.testOgoneMode = function(test) {
     });
     test.done();
 };
+
+exports.testStringify = function(test) {
+    function Obj(value) {
+        this.value = value;
+    }
+    Obj.prototype.toString = function() {
+        return this.value;
+    };
+    var a = {
+        test: new Obj(123)
+    };
+    test.equal(typeof a.test.value, 'number');
+    test.equal(typeof a.test, 'object');
+    var result = Ogone.Request.stringify(a);
+    test.equal(result, 'test=123');
+    test.done();
+};
