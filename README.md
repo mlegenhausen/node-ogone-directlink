@@ -3,7 +3,7 @@ node-ogone-directlink
 
 A thin wrapper around the HTTPS DirectLink API of the ogone payment services with validation functionality.
 
-This library is based on the request and xml2js libraries.
+This library is based on the request, json-schema and xml2js libraries.
 
 Installation
 ============
@@ -28,19 +28,25 @@ First of all read the Ogone DirectLink documentation and then continue reading.
 var Ogone = require('ogone-directlink');
 
 // Creates a ogone object in test mode. Change the last parameter to switch in prod mode.
-var ogone = new Ogone('mypsid', 'myuserid', 'mypswd', 'test' /* 'prod' */);
+var ogone = new Ogone('test' /* 'prod' */, {
+	pspid: 'mypspid', 
+	userid: 'myuserid', 
+	pswd: 'mypswd'
+});
 ```
 
 Create your first order request:
 
 ```
-var order = ogone.createOrderRequest();
-order.orderid = '123;
-order.amount = 1.50; // Amount is automatically multiplied by 100
-order.brand = 'VISA';
-order.ed = '09/12';
-order.cvc = '123';
-order.cardno = '4111111111111111';
+var order = ogone.createOrderRequest({
+	orderid: '123,
+	amount: 1.50, // Amount is automatically multiplied by 100
+	brand: 'VISA',
+	ed: '09/12',
+	cvc: '123',
+	cardno: '4111111111111111'
+});
+
 
 // Create a request with the operation 'SAL'
 // Use order.res(...) for an request with operation 'RES'
@@ -53,15 +59,18 @@ order.sal(function(err, result) {
 Create an order with SHA-SIGN:
 
 ```
-var order = ogone.createOrderRequest('sha1', 'myshapassword');
+var order = ogone.createOrderRequest({
+	// My parameters
+}, 'sha1', 'myshapassword');
 ```
 
 Create your first maintenance request:
 
 ```
-var maintenance = ogone.createMaintenanceRequest();
-maintenance.payid = 'abc';
-maintenance.amount = 1.50;
+var maintenance = ogone.createMaintenanceRequest({
+	payid: 'abc',
+	amount: 1.50
+});
 
 // Create a request with the operation 'REN'
 // Use maintenance.del(...) for an request with operation 'DEL'
@@ -78,8 +87,9 @@ maintenance.ren(function(err, result) {
 Create your first query request:
 
 ```
-varquery = ogone.createQueryRequest();
-query.payid = 'abc';
+var query = ogone.createQueryRequest({
+	payid: 'abc'
+});
 query.status(function(err, result) {
     console.log(err || result);
 });
