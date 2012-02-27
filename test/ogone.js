@@ -74,8 +74,6 @@ exports.testPrepare = function(test) {
     req.required = ['foo'];
     var result = req._prepare({'foo': 'bar'});
     test.equal(result.FOO, 'bar');
-    result = req._prepare({'bar': 'foo'});
-    test.ok(result instanceof Error);
     test.done();
 };
 
@@ -192,12 +190,12 @@ exports.testSendSuccess = function(test) {
 };
 
 exports.testOgoneMode = function(test) {
-    var testa = new Ogone('foo', 'bar', 'foobar', 'test');
+    var testa = new Ogone('test');
     test.equal(testa.mode, 'test');
-    var prod = new Ogone('foo', 'bar', 'foobar', 'prod');
+    var prod = new Ogone('prod');
     test.equal(prod.mode, 'prod');
     test.throws(function() {
-        new Ogone('foo', 'bar', 'foobar', 'error');
+        new Ogone('error');
     });
     test.done();
 };
