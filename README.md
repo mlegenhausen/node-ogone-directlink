@@ -39,7 +39,7 @@ Create your first order request:
 
 ```
 var order = ogone.createOrderRequest({
-	orderid: '123,
+	orderid: '123',
 	amount: 1.50, // Amount is automatically multiplied by 100
 	brand: 'VISA',
 	ed: '09/12',
