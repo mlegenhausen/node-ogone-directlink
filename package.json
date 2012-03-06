@@ -17,7 +17,7 @@
         "xml2js": "0.x.x",
         "sugar": "1.x.x",
         "request": "1.x.x",
-        "json-schema": "0.x.x"
+        "json-schema": "git://github.com/kriszyp/json-schema.git"
     },
     "devDependencies": {
         "nodeunit": "0.x.x"
