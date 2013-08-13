@@ -1,25 +1,25 @@
 {
-    "author": "Malte Legenhausen <mlegenhausen@gmail.com>",
-    "name": "ogone-directlink",
-    "description": "Thin wrapper around the directlink http api of the ogone payment service",
-    "version": "1.0.3",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/mlegenhausen/node-ogone-directlink.git"
-    },
-    "scripts": {
-        "test": "nodeunit test/"
-    },
-    "engines": {
-        "node": "~0.6.6"
-    },
-    "dependencies": {
-        "xml2js": "0.x.x",
-        "sugar": "1.x.x",
-        "request": "1.x.x",
-        "json-schema": "git://github.com/kriszyp/json-schema.git"
-    },
-    "devDependencies": {
-        "nodeunit": "0.x.x"
-    }
+  "author": "Malte Legenhausen <mlegenhausen@gmail.com>",
+  "name": "ogone-directlink",
+  "description": "Thin wrapper around the directlink http api of the ogone payment service",
+  "version": "1.0.3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mlegenhausen/node-ogone-directlink.git"
+  },
+  "scripts": {
+    "test": "nodeunit test/"
+  },
+  "engines": {
+    "node": "~0.6.6"
+  },
+  "dependencies": {
+    "sugar": "1.x.x",
+    "request": "1.x.x",
+    "json-schema": "git://github.com/kriszyp/json-schema.git",
+    "xml2js": "~0.2.8"
+  },
+  "devDependencies": {
+    "nodeunit": "0.x.x"
+  }
 }
