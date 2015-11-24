@@ -24,7 +24,7 @@ Howto Use
 
 First of all read the Ogone DirectLink documentation and then continue reading.
 
-```
+```js
 var Ogone = require('ogone-directlink');
 
 // Creates a ogone object in test mode. Change the last parameter to switch in prod mode.
@@ -37,7 +37,7 @@ var ogone = new Ogone('test' /* 'prod' */, {
 
 Create your first order request:
 
-```
+```js
 var order = ogone.createOrderRequest({
 	orderid: '123',
 	amount: 1.50, // Amount is automatically multiplied by 100
@@ -58,7 +58,7 @@ order.sal(function(err, result) {
 
 Create an order with SHA-SIGN:
 
-```
+```js
 var order = ogone.createOrderRequest({
 	// My parameters
 }, 'sha1', 'myshapassword');
@@ -66,8 +66,8 @@ var order = ogone.createOrderRequest({
 
 Create your first maintenance request:
 
-```
-var maintenance = ogone.createMaintenanceRequest({
+```js
+var maintenance = ogone.createMaintenanceOrder({
 	payid: 'abc',
 	amount: 1.50
 });
@@ -86,7 +86,7 @@ maintenance.ren(function(err, result) {
 
 Create your first query request:
 
-```
+```js
 var query = ogone.createQueryRequest({
 	payid: 'abc'
 });
@@ -102,7 +102,7 @@ Contribution and Issues
 
 This API is used in production, but when you found bugs or want new features open and ticket or send me a pull request.
 
-Lisence
+License
 =======
 
 MIT
